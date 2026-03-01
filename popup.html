@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Archive.ph Checker</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 13px;
+      width: 280px;
+      background: #0f172a;
+      color: #e2e8f0;
+    }
+    .header {
+      padding: 12px 14px 10px;
+      border-bottom: 1px solid #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header h1 {
+      font-size: 13px;
+      font-weight: 600;
+      color: #f1f5f9;
+      letter-spacing: 0.02em;
+    }
+    .options-link {
+      font-size: 11px;
+      color: #64748b;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .options-link:hover { color: #94a3b8; }
+    .body { padding: 14px; }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #1e293b;
+      margin-bottom: 12px;
+    }
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot.archived    { background: #22c55e; }
+    .dot.not_archived { background: #ef4444; }
+    .dot.checking    { background: #94a3b8; animation: pulse 1s infinite; }
+    .dot.error       { background: #f59e0b; }
+    .dot.ignored     { background: #334155; }
+
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    .status-label {
+      font-weight: 500;
+      font-size: 13px;
+    }
+    .archived    .status-label { color: #86efac; }
+    .not_archived .status-label { color: #fca5a5; }
+    .checking    .status-label { color: #cbd5e1; }
+    .error       .status-label { color: #fcd34d; }
+    .ignored     .status-label { color: #64748b; }
+
+    .url-display {
+      font-size: 10px;
+      color: #64748b;
+      word-break: break-all;
+      margin-bottom: 12px;
+      line-height: 1.4;
+      padding: 0 2px;
+    }
+
+    .archive-link {
+      display: block;
+      text-align: center;
+      padding: 7px 12px;
+      background: #1e3a5f;
+      border-radius: 6px;
+      color: #93c5fd;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    .archive-link:hover { background: #1d4ed8; color: #fff; }
+
+    .actions {
+      display: flex;
+      gap: 6px;
+    }
+    .btn {
+      flex: 1;
+      padding: 6px 8px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 500;
+      transition: background 0.15s;
+    }
+    .btn-secondary {
+      background: #1e293b;
+      color: #94a3b8;
+    }
+    .btn-secondary:hover { background: #334155; color: #e2e8f0; }
+    .btn-primary {
+      background: #1d4ed8;
+      color: #fff;
+    }
+    .btn-primary:hover { background: #2563eb; }
+
+    .checked-at {
+      text-align: center;
+      font-size: 10px;
+      color: #475569;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>archive.ph Checker</h1>
+    <a class="options-link" id="openOptions">⚙ Manage sites</a>
+  </div>
+  <div class="body">
+    <div id="status-row" class="status-row ignored">
+      <div id="dot" class="dot ignored"></div>
+      <span id="status-label" class="status-label">Loading…</span>
+    </div>
+    <div id="url-display" class="url-display"></div>
+    <a id="archive-link" class="archive-link" style="display:none" target="_blank">
+      Open archived version →
+    </a>
+    <div class="actions">
+      <button class="btn btn-secondary" id="btn-recheck">Re-check</button>
+      <button class="btn btn-primary" id="btn-submit">Submit to archive.ph</button>
+    </div>
+    <div id="checked-at" class="checked-at"></div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
